@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
-    tools:context=".SignIn">
+    android:layout_centerInParent="true"
+    tools:context=".SignInFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
