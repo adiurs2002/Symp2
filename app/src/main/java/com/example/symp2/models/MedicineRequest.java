@@ -5,27 +5,19 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Medicine {
-    @SerializedName("_id")
-    @Expose
-    private String id;
+public class MedicineRequest {
     @SerializedName("medicine_name")
     @Expose
     private String medicineName;
-    @SerializedName("no_pills")
-    @Expose
-    private Integer noOfPills;
     @SerializedName("times")
     @Expose
     private List<String> times = null;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    @SerializedName("userId")
+    @Expose
+    private String userId;
+    @SerializedName("no_pills")
+    @Expose
+    private Integer noPills;
 
     public String getMedicineName() {
         return medicineName;
@@ -35,19 +27,27 @@ public class Medicine {
         this.medicineName = medicineName;
     }
 
-    public Integer getNoOfPills() {
-        return noOfPills;
-    }
-
-    public void setNoOfPills(Integer noOfPills) {
-        this.noOfPills = noOfPills;
-    }
-
     public List<String> getTimes() {
         return times;
     }
 
     public void setTimes(List<String> times) {
         this.times = times;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Integer getNoPills() {
+        return noPills;
+    }
+
+    public void setNoPills(Integer noPills) {
+        this.noPills = noPills;
     }
 }

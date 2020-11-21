@@ -3,6 +3,7 @@ package com.example.symp2.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class UserSession {
@@ -27,12 +28,18 @@ public class UserSession {
 
         public static final String KEY_id = "_id";
 
+        public static final String KEY_alerts = "alerts";
+        public static final String KEY_Done_alerts = "done_alerts";
+
+        public static final String KEY_DATE = "DATE";
+
 
 
         public UserSession(Context context){
             this.context = context;
             pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
             editor = pref.edit();
+            editor.putString(KEY_DATE, String.valueOf(Calendar.DATE));
         }
 
         public void createLoginSession(String name, String id){
@@ -44,6 +51,9 @@ public class UserSession {
 
             // Storing email in pref
             editor.putString(KEY_id, id);
+
+            editor.putInt(KEY_alerts,0);
+            editor.putInt(KEY_Done_alerts,0);
 
             // commit changes
             editor.commit();
@@ -78,6 +88,25 @@ public class UserSession {
             return pref.getBoolean(IS_LOGIN, false);
         }
 
+        public void increment(){
+            editor.putInt(KEY_alerts,pref.getInt(KEY_alerts,0)+1);
+            editor.commit();
+        }
+
+        public int getAlerts(){
+            return pref.getInt(KEY_alerts,0);
+        }
+
+        public void incrementAlerts(){
+            editor.putInt(KEY_Done_alerts,pref.getInt(KEY_Done_alerts,0)+1);
+            editor.commit();
+        }
+    public int getDoneAlerts(){
+        return pref.getInt(KEY_Done_alerts,0);
+    }
+    public void turnZero(){
+        editor.putInt(KEY_Done_alerts,0);
+    }
 
 
 

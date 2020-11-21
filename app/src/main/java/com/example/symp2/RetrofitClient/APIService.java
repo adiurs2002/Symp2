@@ -1,5 +1,6 @@
 package com.example.symp2.RetrofitClient;
 
+import com.example.symp2.models.MedicineRequest;
 import com.example.symp2.models.SignInRequest;
 import com.example.symp2.models.SignUpResponse;
 import com.example.symp2.models.User;
@@ -32,5 +33,9 @@ public interface APIService {
     @POST("/alluserinfo")
     @Headers({"Content-Type : application/json"})
     Call<JsonObject> getUser(@Body UserRequest userRequest);
+
+    @POST("/addMedicine")
+    @Headers({"Content-Type : application/json"})
+    Call<JsonObject> addMedicine(@Body MedicineRequest medicineRequest);
 
 }
