@@ -1,14 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="10dp"
+        android:id="@+id/rel1"
+        >
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/circularProgressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_width="150dp"
+            app:cpb_progress="20"
+            android:layout_height="wrap_content"
+            app:cpb_background_progressbar_color="@color/purple_200"
+            app:cpb_background_progressbar_width="25dp"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progressbar_color="@color/teal_200"
+            app:cpb_progressbar_width="15dp"
+            app:cpb_round_border="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/circularProgressBar"
+            android:text="Medicines Taken : 2/10"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:textColor="#008000"
+            android:textStyle="bold"
+            />
+    </RelativeLayout>
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@id/rel1"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</FrameLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:backgroundTint="#363333"
+                app:cardCornerRadius="30dp"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:contentDescription=""
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:src="@drawable/ic_baseline_add_24"
+    android:layout_margin="30dp"
+    />
+
+
+
+</RelativeLayout>

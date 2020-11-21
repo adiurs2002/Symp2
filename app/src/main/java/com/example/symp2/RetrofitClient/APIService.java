@@ -4,6 +4,7 @@ import com.example.symp2.models.SignInRequest;
 import com.example.symp2.models.SignUpResponse;
 import com.example.symp2.models.User;
 import com.example.symp2.models.UserInfoRequest;
+import com.example.symp2.models.UserRequest;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
@@ -27,5 +28,9 @@ public interface APIService {
     @POST("/login")
     @Headers({"Content-Type : application/json"})
     Call<JsonObject> login(@Body SignInRequest signInRequest);
+
+    @POST("/alluserinfo")
+    @Headers({"Content-Type : application/json"})
+    Call<JsonObject> getUser(@Body UserRequest userRequest);
 
 }

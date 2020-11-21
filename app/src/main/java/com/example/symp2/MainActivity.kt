@@ -12,11 +12,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val firstFragment = HomeFragment()
+       val firstFragment = HomeFragment()
 //        val secondFragment = MedicFragment()
 //        val thirdFragment = ProfileFragment()
 
-       // setCurrentFragment(firstFragment)
+       setCurrentFragment(firstFragment)
         val userSession = UserSession(this);
         if (!userSession.isLoggedIn){
             val intent = Intent(this@MainActivity,UserSessionActivity::class.java);

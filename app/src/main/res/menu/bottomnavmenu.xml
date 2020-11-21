@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/miMedic"
-        android:title="Disease Prediction"
+        android:title="Diagnosis"
         android:icon="@drawable/ic_dis_pred_foreground"/>
 
     <item
