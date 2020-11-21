@@ -52,7 +52,7 @@
                 android:backgroundTint="#363333"
                 app:cardCornerRadius="30dp"
                 android:padding="10dp"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 >
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
