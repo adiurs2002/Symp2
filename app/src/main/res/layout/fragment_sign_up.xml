@@ -7,6 +7,8 @@
     android:padding="20dp"
     tools:context=".SignUpFragment">
 
+
+
     <EditText
         android:id="@+id/Username"
         android:layout_width="match_parent"
@@ -29,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Username" />
 
     <Button
-        android:id="@+id/btnSignInFrag"
+        android:id="@+id/btnSignUpFrag"
         android:text="Sign Up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +41,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_toggle" />
 
-
-    <!-- TODO: Update blank fragment layout -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
