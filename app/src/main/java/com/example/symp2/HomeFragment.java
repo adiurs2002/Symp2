@@ -3,12 +3,15 @@ package com.example.symp2;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.symp2.Adapter.MedicinAdapter;
 import com.example.symp2.RetrofitClient.APIService;
 import com.example.symp2.RetrofitClient.APIUtils;
 import com.example.symp2.models.Medicine;
@@ -34,6 +37,7 @@ public class HomeFragment extends Fragment {
     UserSession userSession ;
     UserRequest userRequest;
     List<Medicine> medicines;
+    RecyclerView medicineRecyclerView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -55,6 +59,7 @@ public class HomeFragment extends Fragment {
         userSession = new UserSession(getActivity());
         userRequest = new UserRequest();
         medicines = new ArrayList<>();
+        medicineRecyclerView = view.findViewById(R.id.medicineRecyclerView);
         thread.start();
 
 
@@ -77,8 +82,11 @@ public class HomeFragment extends Fragment {
                         Medicine med = g.fromJson(response.body().getAsJsonArray("medicines").get(i),Medicine.class);
                         Log.d("TAG", "onResponse: "+med.getId());
                         medicines.add(med);
-
+                        medicineRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
+                        MedicinAdapter medicinAdapter = new MedicinAdapter(getContext(),medicines);
+                        medicineRecyclerView.setAdapter(medicinAdapter);
                     }
+
                 }
 
                 @Override
