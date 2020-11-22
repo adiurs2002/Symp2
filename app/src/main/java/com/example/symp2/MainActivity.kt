@@ -10,7 +10,9 @@ import android.widget.TextView
 import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.symp2.utils.Dis_Pred
 import com.example.symp2.utils.UserSession
+import com.example.symp2.utils.profile
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.*
 import kotlin.collections.ArrayList
@@ -31,22 +33,34 @@ class MainActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListener  {
 
 
        val firstFragment = HomeFragment()
+       val secondFragment = Dis_Pred();
+       val threeFragment = profile()
 
 
         times = ArrayList()
 
 
        setCurrentFragment(firstFragment)
-
         val selectedListner = BottomNavigationView.OnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.miMedTracker->{
-
+                    setCurrentFragment(firstFragment)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.miMedic->{
+                    setCurrentFragment(secondFragment)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.miProfile->{
+                    setCurrentFragment(threeFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 else -> false
             }
         };
+        bottomNavigationView.setOnNavigationItemSelectedListener(selectedListner)
+
+
 
 
 

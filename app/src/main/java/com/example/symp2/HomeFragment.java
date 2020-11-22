@@ -88,7 +88,42 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
         times = ((MainActivity)getActivity()).getTimes();
         newMedicine = view.findViewById(R.id.newMedicine);
         medicineRecyclerView = view.findViewById(R.id.medicineRecyclerView);
-        thread.start();
+       // thread.start();
+        taken.setText("Medicines Taken : "+String.valueOf(userSession.getDoneAlerts())+"/"+String.valueOf(userSession.getAlerts()));
+        if (userSession.getAlerts()==0)
+            circularProgressBar.setProgress(0);
+        else {
+            circularProgressBar.setProgressMax(100);
+            int done = userSession.getDoneAlerts();
+            int all = userSession.getAlerts();
+            float result = ((float)done/all)*100;
+            Log.d("TAG", "run:hurray "+result);
+            circularProgressBar.setProgress(result);
+        }
+        userRequest.setUserId(userSession.getUserDetails().get("_id"));
+        apiService.getUser(userRequest).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.d("TAG", "onResponse: "+response.body().toString());
+                for (int i = 0 ; i<response.body().getAsJsonArray("medicines").size();i++){
+                    Log.d("TAG", "onResponse: "+ response.body().getAsJsonArray("medicines").get(i));
+                    Gson g = new Gson();
+                    Medicine med = g.fromJson(response.body().getAsJsonArray("medicines").get(i),Medicine.class);
+                    Log.d("TAG", "onResponse: "+med.getId()+med.getNoOfPills());
+                    medicines.add(med);
+                    medicineRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
+                    MedicinAdapter medicinAdapter = new MedicinAdapter(getContext(),medicines);
+                    medicineRecyclerView.setAdapter(medicinAdapter);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+        Log.d("TAG", "onResponse: med"+medicines.size());
         newMedicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,7 +167,22 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
                         request.setTimes(timeStr);
                         EditText no_of_pills = dialogView.findViewById(R.id.no_of_pills);
                         request.setNoPills(Integer.parseInt(no_of_pills.getText().toString()));
-                        sendMedicine.start();
+                        //sendMedicine.start();
+                        apiService.addMedicine(request).enqueue(new Callback<JsonObject>() {
+                            @Override
+                            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                if(response.isSuccessful()){
+                                    Log.d("TAG", "onResponse: "+response.body());
+                                    alertDialog.dismiss();
+                                    ((MainActivity)getActivity()).onRestart();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                            }
+                        });
                     }
                 });
             }
@@ -147,21 +197,7 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
         public void run() {
             super.run();
 
-            apiService.addMedicine(request).enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    if(response.isSuccessful()){
-                        Log.d("TAG", "onResponse: "+response.body());
-                        alertDialog.dismiss();
-                        ((MainActivity)getActivity()).onRestart();
-                    }
-                }
 
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-
-                }
-            });
         }
     };
 
@@ -170,41 +206,7 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
         @Override
         public void run() {
             super.run();
-            taken.setText("Medicines Taken : "+String.valueOf(userSession.getDoneAlerts())+"/"+String.valueOf(userSession.getAlerts()));
-            if (userSession.getAlerts()==0)
-                circularProgressBar.setProgress(0);
-            else {
-                circularProgressBar.setProgressMax(100);
-                int done = userSession.getDoneAlerts();
-                int all = userSession.getAlerts();
-                float result = ((float)done/all)*100;
-                Log.d("TAG", "run:hurray "+result);
-                circularProgressBar.setProgress(result);
-            }
-            userRequest.setUserId(userSession.getUserDetails().get("_id"));
-            apiService.getUser(userRequest).enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    Log.d("TAG", "onResponse: "+response.body().toString());
-                    for (int i = 0 ; i<response.body().getAsJsonArray("medicines").size();i++){
-                        Log.d("TAG", "onResponse: "+ response.body().getAsJsonArray("medicines").get(i));
-                        Gson g = new Gson();
-                        Medicine med = g.fromJson(response.body().getAsJsonArray("medicines").get(i),Medicine.class);
-                        Log.d("TAG", "onResponse: "+med.getId()+med.getNoOfPills());
-                        medicines.add(med);
-                        medicineRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
-                        MedicinAdapter medicinAdapter = new MedicinAdapter(getContext(),medicines);
-                        medicineRecyclerView.setAdapter(medicinAdapter);
-                    }
 
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-
-                }
-            });
-            Log.d("TAG", "onResponse: med"+medicines.size());
 
         }
     };
@@ -221,4 +223,9 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
 
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        thread.interrupt();
+    }
 }
