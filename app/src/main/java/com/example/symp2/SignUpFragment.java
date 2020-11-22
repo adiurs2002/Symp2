@@ -54,7 +54,7 @@ public class SignUpFragment extends Fragment {
                 if (response.isSuccessful()){
                     JsonObject object = response.body();
                     Log.i("Response",response.body().toString());
-                    userSession.createLoginSession(object.getAsJsonObject("user").get("username").toString().replaceAll("\"",""),object.getAsJsonObject("user").get("_id").toString().replaceAll("\"",""));
+                    userSession.createLoginSession(object.getAsJsonObject("user").get("username").toString().replaceAll("\"",""),object.getAsJsonObject("user").get("_id").toString().replaceAll("\"",""),object.getAsJsonObject("user").get("name").toString().replaceAll("\"",""));
                     Log.d("TAG",object.getAsJsonObject("user").get("_id").toString().replaceAll("\"",""));
                     FragmentManager fm = getActivity().getFragmentManager();
                     FragmentTransaction tm = fm.beginTransaction();

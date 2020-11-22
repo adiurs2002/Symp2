@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import android.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,24 +53,34 @@ public class SignInFragment extends Fragment {
        signInBtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               SignInRequest signInRequest = new SignInRequest();
-               signInRequest.setUsername(username.getText().toString());
-               signInRequest.setPassword(password.getText().toString());
-               apiService.login(signInRequest).enqueue(new Callback<JsonObject>() {
-                   @Override
-                   public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                       Intent intent = new Intent(getActivity(),MainActivity.class);
-                       userSession.createLoginSession(response.body().get("username").toString().replaceAll("\"",""),response.body().get("_id").toString().replaceAll("\"",""));
-                       startActivity(intent);
-                   }
-
-                   @Override
-                   public void onFailure(Call<JsonObject> call, Throwable t) {
-
-                   }
-               });
+               thread.start();
            }
        });
         return view;
     }
+
+    Thread thread = new Thread(){
+        @Override
+        public void run() {
+            super.run();
+            SignInRequest signInRequest = new SignInRequest();
+            signInRequest.setUsername(username.getText().toString());
+            signInRequest.setPassword(password.getText().toString());
+            apiService.login(signInRequest).enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.d("TAG", "onResponse: "+response.body());
+                    Intent intent = new Intent(getActivity(),MainActivity.class);
+                    userSession.createLoginSession(response.body().get("username").toString().replaceAll("\"",""),response.body().get("_id").toString().replaceAll("\"",""),response.body().get("name").toString().replaceAll("\"",""));
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                }
+            });
+
+        }
+    };
 }

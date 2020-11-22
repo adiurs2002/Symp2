@@ -3,6 +3,7 @@ package com.example.symp2.RetrofitClient;
 import com.example.symp2.models.MedicineRequest;
 import com.example.symp2.models.SignInRequest;
 import com.example.symp2.models.SignUpResponse;
+import com.example.symp2.models.SymptomsRequest;
 import com.example.symp2.models.User;
 import com.example.symp2.models.UserInfoRequest;
 import com.example.symp2.models.UserRequest;
@@ -13,6 +14,7 @@ import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -38,4 +40,7 @@ public interface APIService {
     @Headers({"Content-Type : application/json"})
     Call<JsonObject> addMedicine(@Body MedicineRequest medicineRequest);
 
+    @POST("/getdisease")
+    @Headers({"Content-Type : application/json"})
+    Call<JsonObject> getDisease(@Body SymptomsRequest symptomsRequest);
 }

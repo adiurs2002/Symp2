@@ -133,6 +133,7 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
                 builder.setView(dialogView);
                 alertDialog = builder.create();
                 alertDialog.show();
+
                 dialogView.findViewById(R.id.addTime).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

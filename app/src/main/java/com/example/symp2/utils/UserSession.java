@@ -25,29 +25,36 @@ public class UserSession {
         private static final String IS_LOGIN = "IsLoggedIn";
 
         public static final String KEY_NAME = "name";
+        public static final String KEY_USER_NAME = "username";
 
-        public static final String KEY_id = "_id";
+
+    public static final String KEY_id = "_id";
 
         public static final String KEY_alerts = "alerts";
         public static final String KEY_Done_alerts = "done_alerts";
 
         public static final String KEY_DATE = "DATE";
+    public static final String KEY_HEIGHT = "height";
+    public static final String KEY_WEIGHT = "weight";
+    public static final String KEY_AGE = "age";
 
 
 
-        public UserSession(Context context){
+
+    public UserSession(Context context){
             this.context = context;
             pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
             editor = pref.edit();
             editor.putString(KEY_DATE, String.valueOf(Calendar.DATE));
         }
 
-        public void createLoginSession(String name, String id){
+        public void createLoginSession(String name, String id,String username){
             // Storing login value as TRUE
             editor.putBoolean(IS_LOGIN, true);
 
             // Storing name in pref
             editor.putString(KEY_NAME, name);
+            editor.putString(KEY_USER_NAME, username);
 
             // Storing email in pref
             editor.putString(KEY_id, id);
@@ -70,6 +77,7 @@ public class UserSession {
 
             // user email id
             user.put(KEY_id, pref.getString(KEY_id, null));
+            user.put(KEY_USER_NAME, pref.getString(KEY_USER_NAME, null));
 
 
             // return user
@@ -105,7 +113,7 @@ public class UserSession {
         return pref.getInt(KEY_Done_alerts,0);
     }
     public void turnZero(){
-        editor.putInt(KEY_Done_alerts,0);
+        editor.putInt(KEY_Done_alerts,0);editor.putInt(KEY_alerts,0);
     }
 
 
