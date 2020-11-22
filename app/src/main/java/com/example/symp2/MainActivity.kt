@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.TimePicker
@@ -27,7 +28,6 @@ class MainActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListener  {
 
 
         times = ArrayList()
-
 
        setCurrentFragment(firstFragment)
         val userSession = UserSession(this);
@@ -70,5 +70,9 @@ class MainActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListener  {
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return super.onOptionsItemSelected(item)
+    }
 
 }
