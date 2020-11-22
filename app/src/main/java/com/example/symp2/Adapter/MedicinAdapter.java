@@ -13,7 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.symp2.R;
 import com.example.symp2.models.Medicine;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class MedicinAdapter extends RecyclerView.Adapter<MedicinAdapter.ViewHolder> {
 
@@ -44,7 +49,7 @@ public class MedicinAdapter extends RecyclerView.Adapter<MedicinAdapter.ViewHold
             String str = "Time : ";
             for (String time :medicines.get(position).getTimes()) {
                 Long milli = Long.parseLong(time);
-                str = str + convertSecondsToHMmSs(milli);
+                str = str + " " + convertSecondsToHMmSs(milli);
             }
             holder.medTime.setText(str);
 
@@ -73,14 +78,9 @@ public class MedicinAdapter extends RecyclerView.Adapter<MedicinAdapter.ViewHold
 
 
     public static String convertSecondsToHMmSs(long seconds) {
-        long s = seconds % 60;
-        long m = (seconds / 60) % 60;
-        long h = (seconds / (60 * 60)) % 24;
-        String str;
-        if (h>12)
-            str = "PM";
-        else
-            str = "AM";
-        return String.format("%d:%02d:%02d "+str, h,m,s);
+        DateFormat formatter = new SimpleDateFormat("HH:mm", Locale.US);
+        formatter.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
+        String text = formatter.format(new Date(seconds));
+        return text;
     }
 }

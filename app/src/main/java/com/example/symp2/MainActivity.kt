@@ -5,17 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.symp2.utils.UserSession
-import java.security.AccessController.getContext
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.log
 
 class MainActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListener  {
     var times: ArrayList<Calendar>? = null
@@ -23,18 +20,22 @@ class MainActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListener  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val userSession = UserSession(this);
+        if (!userSession.isLoggedIn){
+            val intent = Intent(this@MainActivity,UserSessionActivity::class.java);
+            startActivity(intent);
+        }
+
+
 
        val firstFragment = HomeFragment()
 
 
         times = ArrayList()
 
+
        setCurrentFragment(firstFragment)
-        val userSession = UserSession(this);
-        if (!userSession.isLoggedIn){
-            val intent = Intent(this@MainActivity,UserSessionActivity::class.java);
-            startActivity(intent);
-        }
+
 
 
     }
@@ -70,9 +71,16 @@ class MainActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListener  {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onStart() {
+        super.onStart()
 
-        return super.onOptionsItemSelected(item)
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        val i = Intent(this@MainActivity, MainActivity::class.java) //your class
+
+        startActivity(i)
+        finish()
+    }
 }

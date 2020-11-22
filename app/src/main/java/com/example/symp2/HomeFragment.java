@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.symp2.Adapter.MedicinAdapter;
@@ -34,6 +35,7 @@ import com.example.symp2.utils.UserSession;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import org.json.JSONObject;
 
@@ -57,6 +59,8 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
     List<Calendar> times;
     MedicineRequest request;
     AlertDialog alertDialog;
+    TextView taken;
+    CircularProgressBar circularProgressBar;
 
 
     public HomeFragment() {
@@ -79,6 +83,8 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
         userSession = new UserSession(getActivity());
         userRequest = new UserRequest();
         medicines = new ArrayList<>();
+        taken = view.findViewById(R.id.medicinesTaken);
+        circularProgressBar = view.findViewById(R.id.circularProgressBar);
         times = ((MainActivity)getActivity()).getTimes();
         newMedicine = view.findViewById(R.id.newMedicine);
         medicineRecyclerView = view.findViewById(R.id.medicineRecyclerView);
@@ -140,12 +146,14 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
         @Override
         public void run() {
             super.run();
+
             apiService.addMedicine(request).enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     if(response.isSuccessful()){
                         Log.d("TAG", "onResponse: "+response.body());
                         alertDialog.dismiss();
+                        ((MainActivity)getActivity()).onRestart();
                     }
                 }
 
@@ -162,6 +170,17 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
         @Override
         public void run() {
             super.run();
+            taken.setText("Medicines Taken : "+String.valueOf(userSession.getDoneAlerts())+"/"+String.valueOf(userSession.getAlerts()));
+            if (userSession.getAlerts()==0)
+                circularProgressBar.setProgress(0);
+            else {
+                circularProgressBar.setProgressMax(100);
+                int done = userSession.getDoneAlerts();
+                int all = userSession.getAlerts();
+                float result = ((float)done/all)*100;
+                Log.d("TAG", "run:hurray "+result);
+                circularProgressBar.setProgress(result);
+            }
             userRequest.setUserId(userSession.getUserDetails().get("_id"));
             apiService.getUser(userRequest).enqueue(new Callback<JsonObject>() {
                 @Override
@@ -201,4 +220,5 @@ public class HomeFragment extends Fragment implements TimePickerDialog.OnTimeSet
         Log.d("TAG", "onTimeSet: "+times.size());
 
     }
+
 }
