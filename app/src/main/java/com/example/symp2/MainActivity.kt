@@ -11,6 +11,7 @@ import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.symp2.utils.UserSession
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListener  {
             val intent = Intent(this@MainActivity,UserSessionActivity::class.java);
             startActivity(intent);
         }
+        var bottomNavigationView:BottomNavigationView = findViewById(R.id.bottomNavigationView3);
 
 
 
@@ -35,6 +37,16 @@ class MainActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListener  {
 
 
        setCurrentFragment(firstFragment)
+
+        val selectedListner = BottomNavigationView.OnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.miMedTracker->{
+
+                    return@OnNavigationItemSelectedListener true
+                }
+                else -> false
+            }
+        };
 
 
 
@@ -79,7 +91,6 @@ class MainActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListener  {
     override fun onRestart() {
         super.onRestart()
         val i = Intent(this@MainActivity, MainActivity::class.java) //your class
-
         startActivity(i)
         finish()
     }

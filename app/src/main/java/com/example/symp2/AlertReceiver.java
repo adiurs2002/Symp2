@@ -22,23 +22,4 @@ public class AlertReceiver extends BroadcastReceiver {
         UserSession userSession = new UserSession(context);
         userSession.incrementAlerts();
     }
-
-    private void displayAlert(Context con)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(con);
-        builder.setMessage("Are you sure you want to exit?").setCancelable(
-                false).setPositiveButton("Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                }).setNegativeButton("No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
 }
