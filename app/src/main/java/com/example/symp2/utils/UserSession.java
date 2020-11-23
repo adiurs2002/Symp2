@@ -115,6 +115,10 @@ public class UserSession {
     public void turnZero(){
         editor.putInt(KEY_Done_alerts,0);editor.putInt(KEY_alerts,0);
     }
+    public void setAlert (int i){
+        editor.putInt(KEY_alerts,i);
+        editor.commit();
+    }
 
 
 

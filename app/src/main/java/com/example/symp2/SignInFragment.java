@@ -44,7 +44,7 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+       View view = inflater.inflate(R.layout.test_sign_in, container, false);
        signInBtn = view.findViewById(R.id.btnSignInfrag);
        username = view.findViewById(R.id.SigninUsername);
        password = view.findViewById(R.id.SigninPassword);

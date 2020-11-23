@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:padding="20dp" android:layout_width="match_parent" android:orientation="vertical" android:layout_height="match_parent" android:background="#363A46" tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content">
+
+        <TextView android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20sp"
+            android:fontFamily="@font/montserrat_alternates_bold" android:text="Log In" android:textColor="#DED8D5" android:textSize="40dp"/>
+        <EditText
+            android:id="@+id/SigninUsername"
+            android:layout_width="319sp"
+            android:layout_height="50sp"
+            android:backgroundTint="#F7AC14"
+            android:defaultFocusHighlightEnabled="false"
+            android:drawableLeft="@drawable/ic_outline_person_outline_24"
+            android:drawablePadding="15sp"
+            android:hint="user name"
+            android:layout_below="@id/text"
+            android:layout_margin="40dp"
+            android:textColor="#DED8D5"
+            android:textColorHint="#5A5454"
+            android:textCursorDrawable="@drawable/text_cursor"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/SigninPassword"
+            android:layout_width="319sp"
+            android:layout_height="50sp"
+            android:backgroundTint="#F7AC14"
+            android:defaultFocusHighlightEnabled="false"
+            android:drawableLeft="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="15sp"
+            android:layout_below="@id/SigninUsername"
+            android:hint="password"
+            android:layout_marginHorizontal="40dp"
+            android:textColor="#DED8D5"
+            android:inputType="textPassword"
+            android:textColorHint="#5A5454"
+            android:textCursorDrawable="@drawable/text_cursor"
+            android:textSize="20sp"/>
+
+
+
+        <Button
+            android:id="@+id/btnSignInfrag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log in"
+            android:background="#F7AC14"
+            android:layout_below="@id/SigninPassword"
+            android:layout_margin="40dp"
+            android:textColor="#FFF9F6"
+            />
+
+    </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>

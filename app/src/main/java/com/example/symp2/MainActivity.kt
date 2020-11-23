@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListener  {
         times = ArrayList()
 
 
-       setCurrentFragment(firstFragment)
+       setCurrentFragment(threeFragment)
         val selectedListner = BottomNavigationView.OnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.miMedTracker->{

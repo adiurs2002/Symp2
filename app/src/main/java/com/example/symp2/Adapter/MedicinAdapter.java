@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.symp2.R;
 import com.example.symp2.models.Medicine;
+import com.example.symp2.utils.UserSession;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,10 +26,12 @@ public class MedicinAdapter extends RecyclerView.Adapter<MedicinAdapter.ViewHold
 
     private Context ctx ;
     List<Medicine> medicines;
+    UserSession userSession ;
 
     public MedicinAdapter(Context ctx,List<Medicine> medicines) {
         this.ctx = ctx;
         this.medicines = medicines;
+        userSession = new UserSession(ctx);
     }
 
     @NonNull
@@ -41,6 +44,7 @@ public class MedicinAdapter extends RecyclerView.Adapter<MedicinAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull MedicinAdapter.ViewHolder holder, int position) {
         holder.medName.setText(medicines.get(position).getMedicineName());
+        userSession.setAlert(medicines.size());
         if(medicines.get(position).getNoOfPills()!=null)
             holder.medPills.setText("Number Of Pills : "+medicines.get(position).getNoOfPills());
         else
